@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Специальная кнопка</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            touch-action: manipulation;
+        }
+
+        #mainButton {
+            width: 80vw;
+            height: 80vw;
+            border: none;
+            background: url('image.jpg') center/cover no-repeat;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        #mainButton:active {
+            transform: scale(0.95);
+        }
+
+        @media (min-width: 768px) {
+            body {
+                background-color: red;
+                color: white;
+                font-family: Arial;
+                text-align: center;
+                padding: 20px;
+            }
+            #mainButton {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="mainButton"></button>
+    <audio id="player" src="sound.mp3" preload="auto"></audio>
+
+    <script>
+        const button = document.getElementById('mainButton');
+        const audio = document.getElementById('player');
+
+        button.addEventListener('click', function() {
+            // Воспроизводим аудио
+            audio.play();
+            
+            // Скрываем кнопку
+            this.style.display = 'none';
+            
+            // Отключаем повторные нажатия
+            this.removeEventListener('click', arguments.callee);
+        });
+
+        // Блокируем контекстное меню на телефонах
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>
